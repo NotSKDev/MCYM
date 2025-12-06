@@ -309,7 +309,7 @@ const InvoiceForm = () => {
               type="submit"
               className="d-block w-100 btn-secondary"
             >
-              Review Invoice
+              Print Invoice
             </Button>
           </div>
         </Col>
