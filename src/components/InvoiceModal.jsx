@@ -74,7 +74,7 @@ const InvoiceModal = ({
               </h6>
             </div>
             <div className="text-end ms-4">
-              <h6 className="fw-bold mt-1 mb-2">Amount&nbsp;&nbsp;:</h6>
+              <h6 className="fw-bold mt-1 mb-2">Amount:&nbsp;&nbsp;</h6>
               <h5 className="fw-bold text-secondary">
                 {" "}
                 {currency} {total}
