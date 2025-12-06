@@ -17,14 +17,14 @@ const InvoiceForm = () => {
   );
   const [invoiceNumber, setInvoiceNumber] = useState(1);
   const [dateOfIssue, setDateOfIssue] = useState("");
-  const [billTo, setBillTo] = useState("");
+  /*const [billTo, setBillTo] = useState("");
   const [billToEmail, setBillToEmail] = useState("");
-  const [billToAddress, setBillToAddress] = useState("");
+  const [billToAddress, setBillToAddress] = useState("");*/
   const [billFrom, setBillFrom] = useState("");
-  const [billFromEmail, setBillFromEmail] = useState("");
+/*  const [billFromEmail, setBillFromEmail] = useState("");*/
   const [billFromAddress, setBillFromAddress] = useState("");
   const [notes, setNotes] = useState(
-    "Thank you for doing business with us. Have a great day!"
+    "Created by MCYMBills"
   );
   const [total, setTotal] = useState("0.00");
   const [subTotal, setSubTotal] = useState("0.00");
@@ -164,16 +164,7 @@ const InvoiceForm = () => {
                   autoComplete="name"
                   required
                 />
-                <Form.Control
-                  placeholder="Email address"
-                  value={billFromEmail}
-                  type="email"
-                  name="billFromEmail"
-                  className="my-2"
-                  onChange={handleChange(setBillFromEmail)}
-                  autoComplete="email"
-                  required
-                />
+                
                 <Form.Control
                   placeholder="Billing address"
                   value={billFromAddress}
@@ -185,40 +176,7 @@ const InvoiceForm = () => {
                   required
                 />
               </Col>
-              <Col>
-                <Form.Label className="fw-bold">Bill to:</Form.Label>
-                <Form.Control
-                  placeholder="Who is this invoice to?"
-                  rows={3}
-                  value={billTo}
-                  type="text"
-                  name="billTo"
-                  className="my-2"
-                  onChange={handleChange(setBillTo)}
-                  autoComplete="name"
-                  required
-                />
-                <Form.Control
-                  placeholder="Email address"
-                  value={billToEmail}
-                  type="email"
-                  name="billToEmail"
-                  className="my-2"
-                  onChange={handleChange(setBillToEmail)}
-                  autoComplete="email"
-                  required
-                />
-                <Form.Control
-                  placeholder="Billing address"
-                  value={billToAddress}
-                  type="text"
-                  name="billToAddress"
-                  className="my-2"
-                  autoComplete="address"
-                  onChange={handleChange(setBillToAddress)}
-                  required
-                />
-              </Col>
+        
             </Row>
             <InvoiceItem
               onItemizedItemEdit={onItemizedItemEdit}
