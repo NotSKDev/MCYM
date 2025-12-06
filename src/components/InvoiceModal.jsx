@@ -22,24 +22,25 @@ const GenerateInvoice = () => {
       format: "a4",
     });
 
-    pdf.internal.scaleFactor = 1;
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const imgProps = pdf.getImageProperties(imgData);
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
+    let imgWidth = pageWidth;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    const ratio = Math.min(
-      pdfWidth / imgProps.width,
-      pdfHeight / imgProps.height
-    );
+    let heightLeft = imgHeight;
+    let position = 0;
 
-    const imgWidth = imgProps.width * ratio;
-    const imgHeight = imgProps.height * ratio;
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
 
-    const x = (pdfWidth - imgWidth) / 2;
-    const y = 0;
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
 
-    pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
     pdf.save("invoice-001.pdf");
   });
 };
