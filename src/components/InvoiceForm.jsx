@@ -237,26 +237,7 @@ const InvoiceForm = () => {
               total={total}
             />
 
-            <Form.Group className="mb-3">
-              <Form.Label className="fw-bold">Currency:</Form.Label>
-              <Form.Select
-                onChange={(e) => {
-                  setCurrency(e.target.value);
-                }}
-                className="btn btn-light my-1"
-                aria-label="Change Currency"
-              >
-                <option value="$">USD (United States Dollar)</option>
-                <option value="£">GBP (British Pound Sterling)</option>
-                <option value="₹">INR (Indian Rupee)</option>
-                <option value="¥">JPY (Japanese Yen)</option>
-                <option value="$">CAD (Canadian Dollar)</option>
-                <option value="$">AUD (Australian Dollar)</option>
-                <option value="$">SGD (Singapore Dollar)</option>
-                <option value="¥">CNY (Chinese Renminbi)</option>
-                <option value="₿">BTC (Bitcoin)</option>
-              </Form.Select>
-            </Form.Group>
+          
             <Form.Group className="my-3">
               <Form.Label className="fw-bold">Tax rate:</Form.Label>
               <InputGroup className="my-1 flex-nowrap">
