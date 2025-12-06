@@ -89,7 +89,7 @@ const InvoiceModal = ({
                     <tr id={i} key={i}>
                       <td style={{ width: "70px" }}>{item.quantity}</td>
                       <td>
-                        {item.name} - {item.description}
+                        {item.name}
                       </td>
                       <td className="text-end" style={{ width: "100px" }}>
                         {currency} {item.price}
