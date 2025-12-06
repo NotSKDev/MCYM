@@ -1,4 +1,4 @@
- import React from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -10,18 +10,36 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const GenerateInvoice = () => {
-  html2canvas(document.querySelector("#invoiceCapture")).then((canvas) => {
+  const element = document.querySelector("#invoiceCapture");
+  if (!element) return;
+
+  html2canvas(element, { scale: 2 }).then((canvas) => {
     const imgData = canvas.toDataURL("image/png", 1.0);
+
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "pt",
-      format: [612, 792],
+      format: "a4",
     });
+
     pdf.internal.scaleFactor = 1;
+
     const imgProps = pdf.getImageProperties(imgData);
     const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    const ratio = Math.min(
+      pdfWidth / imgProps.width,
+      pdfHeight / imgProps.height
+    );
+
+    const imgWidth = imgProps.width * ratio;
+    const imgHeight = imgProps.height * ratio;
+
+    const x = (pdfWidth - imgWidth) / 2;
+    const y = 0;
+
+    pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
     pdf.save("invoice-001.pdf");
   });
 };
@@ -66,12 +84,10 @@ const InvoiceModal = ({
                 <div className="fw-bold">Billed From:</div>
                 <div>{info.billFrom || ""}</div>
                 <div>{info.billFromAddress || ""}</div>
-                
               </Col>
-              
               <Col md={4}>
                 <div className="fw-bold mt-2">Date Of Issue:</div>
-                <div>{  McDate || ""}</div>
+                <div>{McDate || ""}</div>
               </Col>
             </Row>
             <Table className="mb-0">
@@ -88,9 +104,7 @@ const InvoiceModal = ({
                   return (
                     <tr id={i} key={i}>
                       <td style={{ width: "70px" }}>{item.quantity}</td>
-                      <td>
-                        {item.name}
-                      </td>
+                      <td>{item.name}</td>
                       <td className="text-end" style={{ width: "100px" }}>
                         {currency} {item.price}
                       </td>
@@ -175,7 +189,6 @@ const InvoiceModal = ({
           </Row>
         </div>
       </Modal>
-      
     </div>
   );
 };
