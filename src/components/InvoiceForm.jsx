@@ -20,6 +20,9 @@ const InvoiceForm = () => {
   /*const [billTo, setBillTo] = useState("");
   const [billToEmail, setBillToEmail] = useState("");
   const [billToAddress, setBillToAddress] = useState("");*/
+  const [nowDate, setNowDate] = useState(  
+    new Date().toLocaleDateString() 
+                                        );
   const [billFrom, setBillFrom] = useState("MCYM CHUNKAPPARA");
 /*  const [billFromEmail, setBillFromEmail] = useState("");*/
   const [billFromAddress, setBillFromAddress] = useState("ST. GEORGE MALANKARA SYRIAN CATHOLIC CHURCH, Chunkappara P.O Kottangal, Pathanamthitta, 686547.");
