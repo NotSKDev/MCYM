@@ -25,22 +25,18 @@ const GenerateInvoice = () => {
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    let imgWidth = pageWidth;
-    let imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const ratio = Math.min(
+      pageWidth / canvas.width,
+      pageHeight / canvas.height
+    );
 
-    let heightLeft = imgHeight;
-    let position = 0;
+    const imgWidth = canvas.width * ratio;
+    const imgHeight = canvas.height * ratio;
 
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
+    const x = (pageWidth - imgWidth) / 2;
+    const y = (pageHeight - imgHeight) / 2;
 
-    while (heightLeft > 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-
+    pdf.addImage(imgData, "PNG", x, y, imgWidth, imgHeight);
     pdf.save("invoice-001.pdf");
   });
 };
@@ -64,41 +60,41 @@ const InvoiceModal = ({
         <div
           id="invoiceCapture"
           style={{
-            fontSize: "11px",
-            lineHeight: "14px",
+            fontSize: "9px",
+            lineHeight: "12px",
             width: "100%",
           }}
         >
           <div
             className="d-flex flex-row justify-content-between align-items-start bg-light w-100"
-            style={{ padding: "12px" }}
+            style={{ padding: "8px 10px" }}
           >
             <div className="w-100">
-              <h4 className="fw-bold my-1" style={{ fontSize: "16px" }}>
+              <h4 className="fw-bold my-1" style={{ fontSize: "14px" }}>
                 {info.billFrom || "John Uberbacher"}
               </h4>
               <h6
                 className="fw-bold text-secondary mb-0"
-                style={{ fontSize: "11px" }}
+                style={{ fontSize: "10px" }}
               >
                 ESTIMATED INVOICE
               </h6>
             </div>
           </div>
 
-          <div style={{ padding: "12px" }}>
-            <Row className="mb-2">
-              <Col md={4}>
-                <div className="fw-bold" style={{ fontSize: "11px" }}>
+          <div style={{ padding: "8px 10px" }}>
+            <Row className="mb-1">
+              <Col md={6}>
+                <div className="fw-bold" style={{ fontSize: "9px" }}>
                   Billed From:
                 </div>
                 <div>{info.billFrom || ""}</div>
                 <div>{info.billFromAddress || ""}</div>
               </Col>
-              <Col md={4}>
+              <Col md={3}>
                 <div
                   className="fw-bold"
-                  style={{ marginTop: "2px", fontSize: "11px" }}
+                  style={{ marginTop: "2px", fontSize: "9px" }}
                 >
                   Date Of Issue:
                 </div>
@@ -106,15 +102,28 @@ const InvoiceModal = ({
               </Col>
             </Row>
 
-            <Table className="mb-0" bordered size="sm">
+            <Table
+              className="mb-1"
+              bordered
+              size="sm"
+              style={{ marginBottom: "4px" }}
+            >
               <thead>
                 <tr>
-                  <th style={{ fontSize: "11px" }}>QTY</th>
-                  <th style={{ fontSize: "11px" }}>DESCRIPTION</th>
-                  <th className="text-end" style={{ fontSize: "11px" }}>
+                  <th style={{ fontSize: "9px", padding: "4px 4px" }}>QTY</th>
+                  <th style={{ fontSize: "9px", padding: "4px 4px" }}>
+                    DESCRIPTION
+                  </th>
+                  <th
+                    className="text-end"
+                    style={{ fontSize: "9px", padding: "4px 4px" }}
+                  >
                     PRICE
                   </th>
-                  <th className="text-end" style={{ fontSize: "11px" }}>
+                  <th
+                    className="text-end"
+                    style={{ fontSize: "9px", padding: "4px 4px" }}
+                  >
                     AMOUNT
                   </th>
                 </tr>
@@ -123,13 +132,30 @@ const InvoiceModal = ({
                 {items.map((item, i) => {
                   return (
                     <tr id={i} key={i}>
-                      <td style={{ width: "60px" }}>{item.quantity}</td>
-                      <td>{item.name}</td>
+                      <td
+                        style={{
+                          width: "40px",
+                          padding: "3px 4px",
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        {item.quantity}
+                      </td>
+                      <td
+                        style={{
+                          padding: "3px 4px",
+                          verticalAlign: "middle",
+                        }}
+                      >
+                        {item.name}
+                      </td>
                       <td
                         className="text-end"
                         style={{
-                          width: "110px",
+                          width: "90px",
+                          padding: "3px 4px",
                           whiteSpace: "nowrap",
+                          verticalAlign: "middle",
                         }}
                       >
                         {currency} {Number(item.price).toFixed(2)}
@@ -137,8 +163,10 @@ const InvoiceModal = ({
                       <td
                         className="text-end"
                         style={{
-                          width: "110px",
+                          width: "90px",
+                          padding: "3px 4px",
                           whiteSpace: "nowrap",
+                          verticalAlign: "middle",
                         }}
                       >
                         {currency} {Number(item.price * item.quantity).toFixed(2)}
@@ -149,16 +177,23 @@ const InvoiceModal = ({
               </tbody>
             </Table>
 
-            <Table bordered size="sm">
+            <Table bordered size="sm" style={{ marginBottom: "4px" }}>
               <tbody>
                 <tr className="text-end">
                   <td></td>
-                  <td className="fw-bold" style={{ width: "90px" }}>
+                  <td
+                    className="fw-bold"
+                    style={{ width: "100px", padding: "3px 4px" }}
+                  >
                     SUBTOTAL
                   </td>
                   <td
                     className="text-end"
-                    style={{ width: "110px", whiteSpace: "nowrap" }}
+                    style={{
+                      width: "100px",
+                      padding: "3px 4px",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     {currency} {Number(subTotal).toFixed(2)}
                   </td>
@@ -167,12 +202,19 @@ const InvoiceModal = ({
                 {taxAmount != 0.0 && (
                   <tr className="text-end">
                     <td></td>
-                    <td className="fw-bold" style={{ width: "90px" }}>
+                    <td
+                      className="fw-bold"
+                      style={{ width: "100px", padding: "3px 4px" }}
+                    >
                       TAX
                     </td>
                     <td
                       className="text-end"
-                      style={{ width: "110px", whiteSpace: "nowrap" }}
+                      style={{
+                        width: "100px",
+                        padding: "3px 4px",
+                        whiteSpace: "nowrap",
+                      }}
                     >
                       {currency} {Number(taxAmount).toFixed(2)}
                     </td>
@@ -182,12 +224,19 @@ const InvoiceModal = ({
                 {discountAmount != 0.0 && (
                   <tr className="text-end">
                     <td></td>
-                    <td className="fw-bold" style={{ width: "90px" }}>
+                    <td
+                      className="fw-bold"
+                      style={{ width: "100px", padding: "3px 4px" }}
+                    >
                       DISCOUNT
                     </td>
                     <td
                       className="text-end"
-                      style={{ width: "110px", whiteSpace: "nowrap" }}
+                      style={{
+                        width: "100px",
+                        padding: "3px 4px",
+                        whiteSpace: "nowrap",
+                      }}
                     >
                       {currency} {Number(discountAmount).toFixed(2)}
                     </td>
@@ -196,12 +245,19 @@ const InvoiceModal = ({
 
                 <tr className="text-end">
                   <td></td>
-                  <td className="fw-bold" style={{ width: "90px" }}>
+                  <td
+                    className="fw-bold"
+                    style={{ width: "100px", padding: "3px 4px" }}
+                  >
                     TOTAL
                   </td>
                   <td
                     className="text-end"
-                    style={{ width: "110px", whiteSpace: "nowrap" }}
+                    style={{
+                      width: "100px",
+                      padding: "3px 4px",
+                      whiteSpace: "nowrap",
+                    }}
                   >
                     {currency} {Number(total).toFixed(2)}
                   </td>
@@ -213,8 +269,8 @@ const InvoiceModal = ({
               <div
                 className="bg-light rounded"
                 style={{
-                  padding: "6px 10px",
-                  fontSize: "11px",
+                  padding: "4px 8px",
+                  fontSize: "9px",
                 }}
               >
                 {info.notes}
@@ -223,18 +279,18 @@ const InvoiceModal = ({
           </div>
         </div>
 
-        <div style={{ padding: "12px" }}>
+        <div style={{ padding: "8px 10px" }}>
           <Row>
             <Col md={6}></Col>
             <Col md={6}>
               <Button
                 variant="outline-primary"
                 className="d-block w-100"
-                style={{ fontSize: "12px", padding: "6px 0" }}
+                style={{ fontSize: "11px", padding: "6px 0" }}
                 onClick={GenerateInvoice}
               >
                 <BiCloudDownload
-                  style={{ width: "13px", height: "13px", marginTop: "-2px" }}
+                  style={{ width: "12px", height: "12px", marginTop: "-2px" }}
                   className="me-2"
                 />
                 Download Copy
