@@ -26,6 +26,8 @@ const GenerateInvoice = () => {
   });
 };
 
+const McDate = new Date().toLocaleDateString();
+
 const InvoiceModal = ({
   showModal,
   closeModal,
@@ -69,7 +71,7 @@ const InvoiceModal = ({
               
               <Col md={4}>
                 <div className="fw-bold mt-2">Date Of Issue:</div>
-                <div>{info.nowDate || ""}</div>
+                <div>{  McDate || ""}</div>
               </Col>
             </Row>
             <Table className="mb-0">
