@@ -221,7 +221,7 @@ const InvoiceForm = () => {
               showModal={isOpen}
               closeModal={closeModal}
               info={{
-                dateOfIssue,     
+                  
                 billFrom,
                 billFromAddress,
                 notes,
