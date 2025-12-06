@@ -243,12 +243,8 @@ const InvoiceForm = () => {
               closeModal={closeModal}
               info={{
                 dateOfIssue,
-                invoiceNumber,
-                billTo,
-                billToEmail,
-                billToAddress,
+                invoiceNumber,      
                 billFrom,
-                billFromEmail,
                 billFromAddress,
                 notes,
               }}
