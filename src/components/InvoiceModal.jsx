@@ -69,7 +69,7 @@ const InvoiceModal = ({
               
               <Col md={4}>
                 <div className="fw-bold mt-2">Date Of Issue:</div>
-                <div>{info.currentDate || ""}</div>
+                <div>{info.nowDate || ""}</div>
               </Col>
             </Row>
             <Table className="mb-0">
