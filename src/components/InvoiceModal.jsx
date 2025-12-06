@@ -1,3 +1,5 @@
+Fixed code
+
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -10,52 +12,40 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 
 const GenerateInvoice = () => {
-  const element = document.getElementById("invoiceCapture");
+  const element = document.querySelector("#invoiceCapture");
   if (!element) return;
 
-  const originalWidth = element.offsetWidth;
-
-  html2canvas(element, {
-    scale: 3,
-    useCORS: true,
-    scrollY: -window.scrollY,
-    windowWidth: originalWidth
-  }).then((canvas) => {
+  html2canvas(element, { scale: 2 }).then((canvas) => {
     const imgData = canvas.toDataURL("image/png", 1.0);
 
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "pt",
-      format: "a4"
+      format: "a4",
     });
 
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    const marginX = 20;
-    const marginY = 20;
-
-    const imgWidth = pageWidth - marginX * 2;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let imgWidth = pageWidth;
+    let imgHeight = (canvas.height * imgWidth) / canvas.width;
 
     let heightLeft = imgHeight;
-    let position = marginY;
+    let position = 0;
 
-    pdf.addImage(imgData, "PNG", marginX, position, imgWidth, imgHeight);
-
-    heightLeft -= pageHeight - marginY * 2;
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
 
     while (heightLeft > 0) {
-      position = heightLeft - imgHeight + marginY;
+      position = heightLeft - imgHeight;
       pdf.addPage();
-      pdf.addImage(imgData, "PNG", marginX, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight - marginY * 2;
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
     }
 
     pdf.save("invoice-001.pdf");
   });
 };
-
 
 const McDate = new Date().toLocaleDateString();
 
