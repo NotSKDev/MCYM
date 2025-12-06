@@ -1,5 +1,3 @@
-
-
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Row from "react-bootstrap/Row";
@@ -63,49 +61,74 @@ const InvoiceModal = ({
   return (
     <div>
       <Modal show={showModal} onHide={closeModal} size="lg" centered>
-        <div id="invoiceCapture">
-          <div className="d-flex flex-row justify-content-between align-items-start bg-light w-100 p-4">
+        <div
+          id="invoiceCapture"
+          style={{
+            fontSize: "11px",
+            lineHeight: "14px",
+            width: "100%",
+          }}
+        >
+          <div
+            className="d-flex flex-row justify-content-between align-items-start bg-light w-100"
+            style={{ padding: "12px" }}
+          >
             <div className="w-100">
-              <h4 className="fw-bold my-2">
+              <h4 className="fw-bold my-1" style={{ fontSize: "16px" }}>
                 {info.billFrom || "John Uberbacher"}
               </h4>
-              <h6 className="fw-bold text-secondary mb-1">
-               ESTIMATED INVOICE 
+              <h6
+                className="fw-bold text-secondary mb-0"
+                style={{ fontSize: "11px" }}
+              >
+                ESTIMATED INVOICE
               </h6>
             </div>
-            
           </div>
-          <div className="p-4">
-            <Row className="mb-4">
+
+          <div style={{ padding: "12px" }}>
+            <Row className="mb-2">
               <Col md={4}>
-                <div className="fw-bold">Billed From:</div>
+                <div className="fw-bold" style={{ fontSize: "11px" }}>
+                  Billed From:
+                </div>
                 <div>{info.billFrom || ""}</div>
                 <div>{info.billFromAddress || ""}</div>
               </Col>
               <Col md={4}>
-                <div className="fw-bold mt-2">Date Of Issue:</div>
+                <div
+                  className="fw-bold"
+                  style={{ marginTop: "2px", fontSize: "11px" }}
+                >
+                  Date Of Issue:
+                </div>
                 <div>{McDate || ""}</div>
               </Col>
             </Row>
-            <Table className="mb-0">
+
+            <Table className="mb-0" bordered size="sm">
               <thead>
                 <tr>
-                  <th>QTY</th>
-                  <th>DESCRIPTION</th>
-                  <th className="text-end">PRICE</th>
-                  <th className="text-end">AMOUNT</th>
+                  <th style={{ fontSize: "11px" }}>QTY</th>
+                  <th style={{ fontSize: "11px" }}>DESCRIPTION</th>
+                  <th className="text-end" style={{ fontSize: "11px" }}>
+                    PRICE
+                  </th>
+                  <th className="text-end" style={{ fontSize: "11px" }}>
+                    AMOUNT
+                  </th>
                 </tr>
               </thead>
               <tbody>
                 {items.map((item, i) => {
                   return (
                     <tr id={i} key={i}>
-                      <td style={{ width: "70px" }}>{item.quantity}</td>
+                      <td style={{ width: "60px" }}>{item.quantity}</td>
                       <td>{item.name}</td>
-                      <td className="text-end" style={{ width: "100px" }}>
+                      <td className="text-end" style={{ width: "80px" }}>
                         {currency} {item.price}
                       </td>
-                      <td className="text-end" style={{ width: "100px" }}>
+                      <td className="text-end" style={{ width: "80px" }}>
                         {currency} {item.price * item.quantity}
                       </td>
                     </tr>
@@ -113,71 +136,81 @@ const InvoiceModal = ({
                 })}
               </tbody>
             </Table>
-            <Table>
+
+            <Table bordered size="sm">
               <tbody>
-                <tr>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                  <td>&nbsp;</td>
-                </tr>
                 <tr className="text-end">
                   <td></td>
-                  <td className="fw-bold" style={{ width: "100px" }}>
+                  <td className="fw-bold" style={{ width: "90px" }}>
                     SUBTOTAL
                   </td>
-                  <td className="text-end" style={{ width: "100px" }}>
+                  <td className="text-end" style={{ width: "90px" }}>
                     {currency} {subTotal}
                   </td>
                 </tr>
+
                 {taxAmount != 0.0 && (
                   <tr className="text-end">
                     <td></td>
-                    <td className="fw-bold" style={{ width: "100px" }}>
+                    <td className="fw-bold" style={{ width: "90px" }}>
                       TAX
                     </td>
-                    <td className="text-end" style={{ width: "100px" }}>
+                    <td className="text-end" style={{ width: "90px" }}>
                       {currency} {taxAmount}
                     </td>
                   </tr>
                 )}
+
                 {discountAmount != 0.0 && (
                   <tr className="text-end">
                     <td></td>
-                    <td className="fw-bold" style={{ width: "100px" }}>
+                    <td className="fw-bold" style={{ width: "90px" }}>
                       DISCOUNT
                     </td>
-                    <td className="text-end" style={{ width: "100px" }}>
+                    <td className="text-end" style={{ width: "90px" }}>
                       {currency} {discountAmount}
                     </td>
                   </tr>
                 )}
+
                 <tr className="text-end">
                   <td></td>
-                  <td className="fw-bold" style={{ width: "100px" }}>
+                  <td className="fw-bold" style={{ width: "90px" }}>
                     TOTAL
                   </td>
-                  <td className="text-end" style={{ width: "100px" }}>
+                  <td className="text-end" style={{ width: "90px" }}>
                     {currency} {total}
                   </td>
                 </tr>
               </tbody>
             </Table>
+
             {info.notes && (
-              <div className="bg-light py-3 px-4 rounded">{info.notes}</div>
+              <div
+                className="bg-light rounded"
+                style={{
+                  padding: "6px 10px",
+                  fontSize: "11px",
+                }}
+              >
+                {info.notes}
+              </div>
             )}
           </div>
         </div>
-        <div className="pb-4 px-4">
+
+        <div style={{ padding: "12px" }}>
           <Row>
             <Col md={6}></Col>
             <Col md={6}>
               <Button
                 variant="outline-primary"
-                className="d-block w-100 mt-3 mt-md-0"
+                className="d-block w-100"
+                style={{ fontSize: "12px", padding: "6px 0" }}
                 onClick={GenerateInvoice}
               >
                 <BiCloudDownload
-                  style={{ width: "16px", height: "16px", marginTop: "-3px" }}
+                  style={{ width: "13px", height: "13px", marginTop: "-2px" }}
                   className="me-2"
                 />
                 Download Copy
