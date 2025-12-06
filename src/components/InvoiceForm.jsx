@@ -81,7 +81,7 @@ const InvoiceForm = () => {
     const newItem = {
       id,
       name: "",
-      price: "1.00",
+      price: ".00",
       description: "",
       quantity: 1,
     };
