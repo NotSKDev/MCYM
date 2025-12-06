@@ -60,16 +60,7 @@ const ItemRow = ({ item, onItemizedItemEdit, onDelEvent, currency }) => {
             id: item.id,
           }}
         />
-        <EditableField
-          onItemizedItemEdit={onItemizedItemEdit}
-          cellData={{
-            type: "text",
-            name: "description",
-            placeholder: "Item description",
-            value: item.description,
-            id: item.id,
-          }}
-        />
+        
       </td>
       <td style={{ minWidth: "70px" }}>
         <EditableField
