@@ -125,11 +125,23 @@ const InvoiceModal = ({
                     <tr id={i} key={i}>
                       <td style={{ width: "60px" }}>{item.quantity}</td>
                       <td>{item.name}</td>
-                      <td className="text-end" style={{ width: "80px" }}>
-                        {currency} {item.price}
+                      <td
+                        className="text-end"
+                        style={{
+                          width: "110px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {currency} {Number(item.price).toFixed(2)}
                       </td>
-                      <td className="text-end" style={{ width: "80px" }}>
-                        {currency} {item.price * item.quantity}
+                      <td
+                        className="text-end"
+                        style={{
+                          width: "110px",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {currency} {Number(item.price * item.quantity).toFixed(2)}
                       </td>
                     </tr>
                   );
@@ -144,8 +156,11 @@ const InvoiceModal = ({
                   <td className="fw-bold" style={{ width: "90px" }}>
                     SUBTOTAL
                   </td>
-                  <td className="text-end" style={{ width: "90px" }}>
-                    {currency} {subTotal}
+                  <td
+                    className="text-end"
+                    style={{ width: "110px", whiteSpace: "nowrap" }}
+                  >
+                    {currency} {Number(subTotal).toFixed(2)}
                   </td>
                 </tr>
 
@@ -155,8 +170,11 @@ const InvoiceModal = ({
                     <td className="fw-bold" style={{ width: "90px" }}>
                       TAX
                     </td>
-                    <td className="text-end" style={{ width: "90px" }}>
-                      {currency} {taxAmount}
+                    <td
+                      className="text-end"
+                      style={{ width: "110px", whiteSpace: "nowrap" }}
+                    >
+                      {currency} {Number(taxAmount).toFixed(2)}
                     </td>
                   </tr>
                 )}
@@ -167,8 +185,11 @@ const InvoiceModal = ({
                     <td className="fw-bold" style={{ width: "90px" }}>
                       DISCOUNT
                     </td>
-                    <td className="text-end" style={{ width: "90px" }}>
-                      {currency} {discountAmount}
+                    <td
+                      className="text-end"
+                      style={{ width: "110px", whiteSpace: "nowrap" }}
+                    >
+                      {currency} {Number(discountAmount).toFixed(2)}
                     </td>
                   </tr>
                 )}
@@ -178,8 +199,11 @@ const InvoiceModal = ({
                   <td className="fw-bold" style={{ width: "90px" }}>
                     TOTAL
                   </td>
-                  <td className="text-end" style={{ width: "90px" }}>
-                    {currency} {total}
+                  <td
+                    className="text-end"
+                    style={{ width: "110px", whiteSpace: "nowrap" }}
+                  >
+                    {currency} {Number(total).toFixed(2)}
                   </td>
                 </tr>
               </tbody>
