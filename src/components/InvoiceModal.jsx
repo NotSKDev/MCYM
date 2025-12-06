@@ -64,14 +64,9 @@ const InvoiceModal = ({
                 <div className="fw-bold">Billed From:</div>
                 <div>{info.billFrom || ""}</div>
                 <div>{info.billFromAddress || ""}</div>
-                <div>{info.billFromEmail || ""}</div>
+                
               </Col>
-              <Col md={4}>
-                <div className="fw-bold">Billed to:</div>
-                <div>{info.billTo || ""}</div>
-                <div>{info.billToAddress || ""}</div>
-                <div>{info.billToEmail || ""}</div>
-              </Col>
+              
               <Col md={4}>
                 <div className="fw-bold mt-2">Date Of Issue:</div>
                 <div>{info.dateOfIssue || ""}</div>
