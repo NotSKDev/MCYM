@@ -15,7 +15,7 @@ const InvoiceForm = () => {
   const [currentDate, setCurrentDate] = useState(
     new Date().toLocaleDateString()
   );
-  const [invoiceNumber, setInvoiceNumber] = useState(1);
+ /* const [invoiceNumber, setInvoiceNumber] = useState(1);*/
   const [dateOfIssue, setDateOfIssue] = useState("");
   /*const [billTo, setBillTo] = useState("");
   const [billToEmail, setBillToEmail] = useState("");
@@ -136,18 +136,7 @@ const InvoiceForm = () => {
                   />
                 </div>
               </div>
-              <div className="d-flex flex-row align-items-center">
-                <span className="fw-bold me-2">Invoice&nbsp;Number:&nbsp;</span>
-                <Form.Control
-                  type="number"
-                  value={invoiceNumber}
-                  name="invoiceNumber"
-                  onChange={handleChange(setInvoiceNumber)}
-                  min="1"
-                  style={{ maxWidth: "70px" }}
-                  required
-                />
-              </div>
+              
             </div>
             <hr className="my-4" />
             <Row className="mb-5">
